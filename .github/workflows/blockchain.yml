@@ -1,0 +1,40 @@
+name: Test Smart Contracts
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    services:
+
+      ganache:
+        image: trufflesuite/ganache-cli
+        ports:
+          - 8545/tcp
+        options: >-
+          --health-cmd "curl http://127.0.0.1:8545"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps: 
+      - name: Clone repo
+        uses: actions/checkout@v2
+      
+      - name: Setup node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        working-directory: ./blockchain
+        run: npm install
+        cache: 'npm'
+        cache-dependency-path: blockchain/package-lock.json
+      
+      - name: Truffle
+        working-directory: ./blockchain
+        run: |
+          npx truffle compile
+          npx truffle test
