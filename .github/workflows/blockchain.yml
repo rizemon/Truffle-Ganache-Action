@@ -11,7 +11,7 @@ jobs:
       ganache:
         image: trufflesuite/ganache-cli
         ports:
-          - 8545/tcp
+          - 8545:8545
         options: >-
           --health-cmd "curl http://127.0.0.1:8545"
           --health-interval 10s
