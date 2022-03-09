@@ -26,12 +26,12 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '16'
+        cache: 'npm'
+        cache-dependency-path: blockchain/package-lock.json
 
       - name: Install dependencies
         working-directory: ./blockchain
         run: npm install
-        cache: 'npm'
-        cache-dependency-path: blockchain/package-lock.json
       
       - name: Truffle
         working-directory: ./blockchain
