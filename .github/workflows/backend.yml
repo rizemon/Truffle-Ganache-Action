@@ -6,12 +6,13 @@ jobs:
 
     runs-on: ubuntu-latest
 
-    ganache:
+    services:
+      ganache:
         image: trufflesuite/ganache-cli
         ports:
           - 8545:8545
 
-    mongodb:
+      mongodb:
         image: mongo
         env:
           MONGO_INITDB_ROOT_USERNAME: root
