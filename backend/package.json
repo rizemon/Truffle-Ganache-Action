@@ -18,7 +18,7 @@
     "@koa/router": "^10.1.1",
     "koa": "^2.13.4",
     "koa-body": "^4.2.0",
-    "koa-mongo": "^1.9.3"
+    "mongoose": "^6.2.5"
   },
   "devDependencies": {
     "chai": "^4.3.6",

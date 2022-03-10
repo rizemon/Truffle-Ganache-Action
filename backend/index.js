@@ -1,10 +1,15 @@
 import Koa from 'koa'
 import bodyParser from 'koa-body'
 import Router from '@koa/router'
-import mongo from 'koa-mongo'
+import mongoose from 'mongoose'
 
 const app = new Koa()
 const router = new Router()
+
+mongoose.connect('mongodb://root:root@127.0.0.1:27017/test')
+  .catch(function () {
+    throw new Error('Fail to connect to mongodb')
+  })
 
 router.get('index', '/', async (ctx, next) => {
   ctx.body = '<h1>Hello World, Koa folks!</h1>'
@@ -15,7 +20,6 @@ router.post('debug', '/debug', bodyParser(), async (ctx, next) => {
 })
 
 app
-  .use(mongo({ uri: 'mongodb://root:root@127.0.0.1:27017/test?authSource=admin', max: 100, min: 1 }))
   .use(router.routes())
   .use(router.allowedMethods())
 
