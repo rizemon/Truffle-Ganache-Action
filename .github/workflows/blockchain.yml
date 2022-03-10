@@ -2,7 +2,7 @@ name: Test Smart Contracts
 on: [push, pull_request]
 
 jobs:
-  contract-ci:
+  blockchain-ci:
 
     runs-on: ubuntu-latest
 
@@ -14,8 +14,12 @@ jobs:
           - 8545:8545
 
     steps: 
-      - name: Clone repo
+      - name: Clone repo 
         uses: actions/checkout@v2
+
+      - name: Merge to master
+        if: ${{ !env.ACT }}
+        run: git checkout --progress --force ${{ github.sha }}
       
       - name: Setup node (If running in Github Actions)
         if: ${{ !env.ACT }}
@@ -34,6 +38,10 @@ jobs:
       - name: Install dependencies
         working-directory: ./blockchain
         run: npm install
+
+      - name: Run linter
+        working-directory: ./blockchain
+        run: npm run lint
       
       - name: Truffle
         working-directory: ./blockchain

@@ -23,6 +23,10 @@ jobs:
     steps: 
       - name: Clone repo
         uses: actions/checkout@v2
+
+      - name: Merge to master
+        if: ${{ !env.ACT }}
+        run: git checkout --progress --force ${{ github.sha }}
       
       - name: Setup node (If running in Github Actions)
         if: ${{ !env.ACT }}
@@ -41,6 +45,10 @@ jobs:
       - name: Install dependencies
         working-directory: ./backend
         run: npm install
+
+      - name: Run linter
+        working-directory: ./backend
+        run: npm run lint
       
       - name: Run tests
         working-directory: ./backend

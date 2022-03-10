@@ -10,6 +10,10 @@ jobs:
       - name: Clone repo
         uses: actions/checkout@v2
       
+      - name: Merge to master
+        if: ${{ !env.ACT }}
+        run: git checkout --progress --force ${{ github.sha }}
+      
       - name: Setup node (If running in Github Actions)
         if: ${{ !env.ACT }}
         uses: actions/setup-node@v2
