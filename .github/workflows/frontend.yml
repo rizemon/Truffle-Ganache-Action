@@ -1,24 +1,10 @@
-name: Test Backend
+name: Test Frontend
 on: [push, pull_request]
 
 jobs:
-  backend-ci:
+  frontend-ci:
 
     runs-on: ubuntu-latest
-
-    services:
-      ganache:
-        image: trufflesuite/ganache-cli
-        ports:
-          - 8545:8545
-
-      mongodb:
-        image: mongo
-        env:
-          MONGO_INITDB_ROOT_USERNAME: root
-          MONGO_INITDB_ROOT_PASSWORD: root
-        ports:
-          - 27017:27017
 
     steps: 
       - name: Clone repo
@@ -39,9 +25,13 @@ jobs:
           node-version: '16'
 
       - name: Install dependencies
-        working-directory: ./backend
+        working-directory: ./frontend
         run: npm install
+
+      - name: Run linter
+        working-directory: ./frontend
+        run: npm run lint
       
       - name: Run tests
-        working-directory: ./backend
+        working-directory: ./frontend
         run: npm run test

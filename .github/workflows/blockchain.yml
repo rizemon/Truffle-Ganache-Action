@@ -2,7 +2,7 @@ name: Test Smart Contracts
 on: [push, pull_request]
 
 jobs:
-  contract-build:
+  contract-ci:
 
     runs-on: ubuntu-latest
 
