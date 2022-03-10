@@ -1,9 +1,11 @@
 const Koa = require('koa');
 const Router = require('koa-router');
 const bodyParser = require('koa-body');
+const mongoose = require('mongoose');
 
 const app = new Koa();
 const router = new Router();
+mongoose.connect('mongodb://root:root@127.0.0.1:27017/test');
 
 
 router.get('index', '/', async (ctx, next) => {
