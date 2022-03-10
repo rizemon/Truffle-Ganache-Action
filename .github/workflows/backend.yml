@@ -1,17 +1,10 @@
-name: Test Smart Contracts
+name: Test Backend
 on: [push, pull_request]
 
 jobs:
-  contract-build:
+  backend-build:
 
     runs-on: ubuntu-latest
-
-    services:
-
-      ganache:
-        image: trufflesuite/ganache-cli
-        ports:
-          - 8545:8545
 
     steps: 
       - name: Clone repo
@@ -23,7 +16,7 @@ jobs:
         with:
           node-version: '16'
           cache: 'npm'
-          cache-dependency-path: blockchain/package-lock.json
+          cache-dependency-path: backend/package-lock.json
 
       - name: Setup node (If running locally via act)
         if: ${{ env.ACT }}
@@ -32,11 +25,9 @@ jobs:
           node-version: '16'
 
       - name: Install dependencies
-        working-directory: ./blockchain
+        working-directory: ./backend
         run: npm install
       
-      - name: Truffle
-        working-directory: ./blockchain
-        run: |
-          npx truffle compile
-          npx truffle test
+      - name: Run tests
+        working-directory: ./backend
+        run: npm test
